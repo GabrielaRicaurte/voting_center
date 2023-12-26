@@ -11,9 +11,6 @@ use Illuminate\Http\Request;
 class WelcomeController extends Controller
 {
     public function index() {
-        $categories = Category::get();
-        $results = Result::get();
-        $participants = Participant::get();
-        return view('welcome', compact('categories', 'results', 'participants'));
+        return view('welcome');
     }
 }

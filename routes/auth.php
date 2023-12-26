@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ResultsController;
 use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\VerifyEmailController;
@@ -13,15 +15,15 @@ use App\Http\Controllers\Auth\EmailVerificationPromptController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
 
 Route::middleware('guest')->group(function () {
-    // Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
+    Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
 
     Route::get('register', [RegisteredUserController::class, 'create'])
-                ->name('register');
+        ->name('register');
 
     Route::post('register', [RegisteredUserController::class, 'store']);
 
-    Route::get('/', [AuthenticatedSessionController::class, 'create'])
-                ->name('login');
+    Route::get('login', [AuthenticatedSessionController::class, 'create'])
+        ->name('login');
 
     Route::post('login', [AuthenticatedSessionController::class, 'store']);
 
@@ -40,29 +42,35 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
     // Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->middleware(['auth', 'verified'])->name('dashboard');
+    // Route::get('/dashboard', function () {
+    //     return view('dashboard');
+    // })->middleware(['auth', 'verified'])->name('dashboard');
+
+    Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+    Route::get('/results', [ResultsController::class, 'index'])->name('results');
+    Route::get('/create/{id}', [ResultsController::class, 'create'])->name('vote.create');
+    Route::post('/store/{id}', [ResultsController::class, 'store'])->name('vote.store');
 
 
-//     Route::get('verify-email', EmailVerificationPromptController::class)
-//                 ->name('verification.notice');
 
-//     Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)
-//                 ->middleware(['signed', 'throttle:6,1'])
-//                 ->name('verification.verify');
+    //     Route::get('verify-email', EmailVerificationPromptController::class)
+    //                 ->name('verification.notice');
 
-//     Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
-//                 ->middleware('throttle:6,1')
-//                 ->name('verification.send');
+    //     Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)
+    //                 ->middleware(['signed', 'throttle:6,1'])
+    //                 ->name('verification.verify');
 
-//     Route::get('confirm-password', [ConfirmablePasswordController::class, 'show'])
-//                 ->name('password.confirm');
+    //     Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
+    //                 ->middleware('throttle:6,1')
+    //                 ->name('verification.send');
 
-//     Route::post('confirm-password', [ConfirmablePasswordController::class, 'store']);
+    //     Route::get('confirm-password', [ConfirmablePasswordController::class, 'show'])
+    //                 ->name('password.confirm');
 
-//     Route::put('password', [PasswordController::class, 'update'])->name('password.update');
+    //     Route::post('confirm-password', [ConfirmablePasswordController::class, 'store']);
 
-//     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
-//                 ->name('logout');
+    //     Route::put('password', [PasswordController::class, 'update'])->name('password.update');
+
+    Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
+        ->name('logout');
 });

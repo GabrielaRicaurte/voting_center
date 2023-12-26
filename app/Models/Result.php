@@ -12,7 +12,12 @@ class Result extends Model
 
     protected $table = 'results';
 
-    protected $fillable = ['category_id', 'participant_id', 'votes'];
+    protected $fillable = ['user_id', 'category_id', 'participant_id', 'votes'];
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public function participant(): BelongsTo
     {
@@ -23,4 +28,6 @@ class Result extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+
 }

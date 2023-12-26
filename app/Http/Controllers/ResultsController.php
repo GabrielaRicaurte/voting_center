@@ -9,6 +9,13 @@ use Illuminate\Http\Request;
 
 class ResultsController extends Controller
 {
+
+    public function index() {
+        $results = Result::get();
+        $categories = Category::get();
+        return view('votes.results', compact('results', 'categories'));
+    }
+
     public function create($id)
     {
         $categories = Category::where('id', $id)->get();
@@ -21,7 +28,17 @@ class ResultsController extends Controller
     {
         // $result = new Result();
         // dd($request->votes);
+        $userId = auth()->id();
+
+        if (Result::where('user_id', $userId)
+            ->where('category_id', $id)
+            ->exists()
+        ) {
+            return redirect()->back()->with('error', 'You have already voted in this category');
+        }
+
         $result = Result::firstOrNew(['category_id' => $id, 'participant_id' => $request->participant]);
+        $result->user_id = $userId;
         $result->category_id = $id;
         $result->participant_id = $request->participant;
         $result->votes += $request->votes;

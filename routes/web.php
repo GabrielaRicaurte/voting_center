@@ -17,7 +17,4 @@ use App\Http\Controllers\WelcomeController;
 */
 
 
-Route::get('/create/{id}', [ResultsController::class, 'create'])->name('vote.create');
-Route::post('/store/{id}', [ResultsController::class, 'store'])->name('vote.store');
-
 require __DIR__.'/auth.php';

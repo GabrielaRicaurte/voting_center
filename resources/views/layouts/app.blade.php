@@ -15,6 +15,7 @@
 
 <body class="bg-black">
     @auth
+    @include('layouts.navbar')
     @else
         <div id="particles-js"></div> <!-- stats - count particles -->
         <script src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>

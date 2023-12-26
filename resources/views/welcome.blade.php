@@ -9,14 +9,14 @@
                     <hr>
                     @auth
                         <a href="{{ url('/dashboard') }}"
-                            class="font-semibold focus:outline focus:outline-2 focus:rounded-sm focus:outline-purple-700">Dashboard</a>
+                            class="font-semibold ">Dashboard</a>
                     @else
                         <a href="{{ route('login') }}"
-                            class="focus:outline focus:outline-2 focus:rounded-sm focus:outline-purple-700 text-2xl transition hover:scale-105">Login</a>
+                            class=" text-2xl transition hover:scale-105"><i class="fas fa-caret-right"></i> Login</a>
 
                         @if (Route::has('register'))
                             <a href="{{ route('register') }}"
-                                class=" focus:outline focus:outline-2 focus:rounded-sm focus:outline-purple-700 text-2xl transition hover:scale-105">Register</a>
+                                class="  text-2xl transition hover:scale-105"><i class="fas fa-caret-right"></i> Register</a>
                         @endif
                     @endauth
                 </div>
